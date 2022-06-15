@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- ///////////////////////////////////////////////////////////////////// -->
+  <head>
+    <title>Calculator</title>
+    <script type="text/javascript">
+      // This function is called when click on button
+      function fun(){
+        // 1. Get the input from the field
+        let num = parseInt(document.getElementById("num").value);
+
+        // 2. if there is something proceed
+        if(num){
+          // 2.1. Make answer block visible visible
+          document.getElementById("resPara").style.display = "block";
+
+          // 2.2. Print Even or Odd in the answer block
+          if(num % 2 == 0)
+            document.getElementById("res").innerText = "Even";
+          else
+            document.getElementById("res").innerText = "Odd";
+        }
+
+        // 3. if there is nothing in the field, do nothing
+        // else ...
+      }
+    </script>
+  </head>
+  <!-- ///////////////////////////////////////////////////////////////////// -->
+  <body>
+    <h1>Odd Even Checker</h1>
+
+    <p>
+      <b>Enter the number : </b>
+      <input type="number" id="num" name="number">
+      <button onclick="fun()" name="perform">Check Odd Or Even</button>
+    </p>
+
+    <p id="resPara" style="display:none;">
+      It is an <span id="res"></span> number!
+    </p>
+  </body>
+  <!-- ///////////////////////////////////////////////////////////////////// -->
+</html>

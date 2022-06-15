@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"> 
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<style>
+			body {
+	  			font-family: 'Courier New', monospace;
+			}
+		</style>
+		<title>Practical 10</title> 
+	</head> 
+	
+	<body> 
+		</br>
+		<big><big><h1 align ="center">
+			JavaScript Basics
+		</h1></big></big>
+		<h4 align ="center">
+			Submitted by A66 Syed Minnatullah (26107)
+		</h4>
+		<script> 
+		let endl = "</br>";
+		
+		// Get the dates
+		var date = new Date();
+		document.write("<h4 align=\"center\"> Clock : " 
+			+ date.getHours() + " hours and " 
+			+ date.getMinutes() + " Minutes" 
+			+ "</h4>");
+		
+		
+		// Arithmetic Operations
+		var a = 333; // <<<----- CAN CHANGE IT !
+		var b = 111; // <<<----- CAN CHANGE IT !
+		document.write("<h2>Arithmetic Operations</h2>");
+		document.write("......Addition : " 	+ a + " + " + b + " = " + (a + b) + endl);
+		document.write("..Substraction : " 	+ a + " - " + b + " = " + (a - b) + endl);
+		document.write("Multiplication : " 	+ a + " x " + b + " = " + (a * b) + endl);
+		document.write("......Division : " 	+ a + " / " + b + " = " + (a / b) + endl);
+		document.write("........Modulo : " 	+ a + " % " + b + " = " + (a % b) + endl);
+		
+		// Tabel
+		var n = 66; // <<<----- CAN CHANGE IT !
+		document.write("<h2>Tabel of " + n + "</h2>");
+		for(i = 1 ; i < 11 ; i++) { 
+			document.write(n + " x " + i + " = " + (n * i) + endl);
+		}
+		
+		// Odd even
+		document.write("<h2>First 100 Odd Numbers</h2>");
+		for(i = 1 ; i < 101 ; i++) {
+			if(i % 2 != 0)
+				document.write(i + " ");
+			// Newline for each 10 nos.
+			if(i % 10 == 0)
+				document.write(endl);
+		}
+		</script> 
+	</body> 
+</html> 

@@ -1,0 +1,10 @@
+Advanced C programming language
+ACPL - LABS
+Name 		: 5MQuadr! 
+GitHub 	: s-m-quadri
+DIEMS Serial 	: A66 
+DIEMS Roll 	: 26107 
+DIEMS AY 	: 2020-24
+
+Important:
+GTK $ gcc source_file_name `pkg-config --cflags gtk+-3.0 --libs gtk+-3.0`

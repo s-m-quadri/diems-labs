@@ -1,0 +1,2 @@
+Important Compiling GTK:
+GTK $ gcc source_file_name `pkg-config --cflags gtk+-3.0 --libs gtk+-3.0`

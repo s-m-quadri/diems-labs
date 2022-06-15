@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+		<style>
+		body {
+			font-family: 'Comfortaa';
+			font-size: 22px;
+		}
+		h2, h3{
+			text-align: center;
+			color: #B8860B;
+		}
+		a{
+			text-align: center;
+			color: #B8860B;
+		}
+		a:link, a:visited {
+		  text-decoration: none;
+		  
+		}
+		a:hover, a:active {
+		  text-decoration: underline;
+		}
+		p:hover, table:hover, ul:hover{
+			background-color: #ffffe6;
+			transition: background-color 1s;
+		}
+		#head, #foot{
+			text-align: center;
+			background-color: #B8860B;
+			color: #ffffff;
+			padding: 25px;
+		}
+		input[type=text], input[type=password], input[type=email] {
+		  width: 20%;
+		  padding: 12px;
+		  margin: 8px;
+		  transition: width 1s ease-in-out;
+		}
+		input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+		  width: 40%;
+		  transition: width 1s ease-in-out;
+		}
+		#submit{
+			border: none;
+			color: white;
+			padding: 14px 28px;
+			cursor: pointer;
+			background-color: #B8860B;
+		}
+		#submit:hover{
+			text-decoration: underline;
+		}
+		iframe{
+			width: 95%;
+			border:none;
+		}
+		</style>
+		<title>Practical 02</title>
+	</head>
+	<body>
+		<div id="head">
+		<h1>User Registration Form</h1>
+		</div>
+		
+		<h2>Input the data as per the instruction fields</h2>
+		
+		<hr/>
+		
+		<div align="center">
+		<form method="GET">
+			Name
+			<input type="text" name="name" placeholder="enter full name here." autocomplete="off">
+			
+			<br/>
+			Password : 
+			<input type="password" name="password" placeholder="enter password here." autocomplete="off">
+			
+			<br/>
+			Email : 
+			<input type="email" name="email" placeholder="enter email address here." autocomplete="off">
+			
+			<br/>
+			<br/>
+			Gender : 
+			<input type="radio" name="gender" Value="Male">Male</input>
+			<input type="radio" name="gender" value="Female">Female</input>
+			
+			<br/>
+			<br/>
+			Skills : 
+			<input type="checkbox" name="skills" value="C/C++">C/C++</input>
+			<input type="checkbox" name="skills" value="Java">Java</input>
+			<input type="checkbox" name="skills" value="Python">Python</input>
+			<input type="checkbox" name="skills" value="SQL">SQL</input>
+			
+			<br/>
+			<br/>
+			<input type="submit" name="submit" id="submit">
+		</form>
+		
+		<br/>
+		<div id="foot">
+			<h1>Thanks for visiting !</h1>
+		</div>
+		
+		<br/>
+		<br/>
+		<h2>Continue Reading about search engines</h2>
+		<iframe src="./02_styling_html.html" name="other_site"></iframe>
+		
+		<br/>
+		<br/>
+		
+		<a href="#top">go to top of the page</a>
+		<br/>
+		<br/>
+		
+		</div>
+	</body>
+</html>

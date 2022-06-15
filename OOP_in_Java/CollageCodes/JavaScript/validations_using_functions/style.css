@@ -1,0 +1,47 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(58, 58, 58);
+    color: white;
+}
+
+h1 {
+    color: white;
+}
+
+.wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    margin: 15px;
+    font-size: 30px;
+}
+
+input {
+    font-size: 30px;
+}
+
+.name-error, .email-error, .number-error {
+    text-align: center;
+}
+
+#form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    margin: 25px;
+    padding: 20px;
+}
