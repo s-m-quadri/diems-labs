@@ -71,7 +71,7 @@ int main() {
   // 1. Setup the Space and GUI
   /////////////////////////////////////////////////////////////////////////////
   GUI_icon();
-  BANK my_bank = create_bank(get_string("\tEnter Bank name: \e[38;5;32m"));
+  BANK my_bank = create_bank(get_string("\tEnter Bank name: "));
   GUI_head();
 
   /////////////////////////////////////////////////////////////////////////////
@@ -128,16 +128,16 @@ bool recognize_and_perform(BANK my_bank, TOKEN_LIST list) {
     /////////////////////////////////////////////////////////////////////////
     if (scanned_token == list->quantity) {
       if (environment != FREE)
-        printf("\e[38;5;196mFailure:\e[0m Incomplete operation and command.\n");
+        printf("Failure: Incomplete operation and command.\n");
       if (environment == HOLD_BY_DEPOSIT)
-        printf("Usage \e[38;5;214m$: deposit (amount)\e[0m\n");
+        printf("Usage $: deposit (amount)\n");
       if (environment == HOLD_BY_WITHDRAW)
-        printf("Usage \e[38;5;214m$: withdraw (amount)\e[0m\n");
+        printf("Usage $: withdraw (amount)\n");
       if (environment == HOLD_BY_WITHDRAW_CASH ||
           environment == HOLD_BY_WITHDRAW_CASH_MAXIMIZE)
         printf(
-            "Usage \e[38;5;214m$: withdraw cash (amount) (note-denom...) "
-            "done\e[0m\n");
+            "Usage $: withdraw cash (amount) (note-denom...) "
+            "done\n");
       break;
     }
 
@@ -166,9 +166,9 @@ bool recognize_and_perform(BANK my_bank, TOKEN_LIST list) {
     if (strcmp(list->tokens[scanned_token].get, "login") == 0 &&
         environment == FREE) {
       if (login(my_bank) == true)
-        printf("\e[38;5;40mSuccess:\e[0m You have logged into the account!\n");
+        printf("Success: You have logged into the account!\n");
       else
-        printf("\e[38;5;196mFailure:\e[0m Not logged in! Try again.\n");
+        printf("Failure: Not logged in! Try again.\n");
       scanned_token++;
       continue;
     }
@@ -180,9 +180,9 @@ bool recognize_and_perform(BANK my_bank, TOKEN_LIST list) {
         environment == FREE) {
       if (logout(my_bank) == true)
         printf(
-            "\e[38;5;40mSuccess:\e[0m You have logged out of the account!\n");
+            "Success: You have logged out of the account!\n");
       else
-        printf("\e[38;5;196mFailure:\e[0m Not logged out! Try again.\n");
+        printf("Failure: Not logged out! Try again.\n");
       scanned_token++;
       continue;
     }
@@ -200,11 +200,11 @@ bool recognize_and_perform(BANK my_bank, TOKEN_LIST list) {
       if (list->tokens[scanned_token].is_numeric == true) {
         if (deposit(my_bank, atoll(list->tokens[scanned_token].get)) == true)
           printf(
-              "\e[38;5;40mSuccess:\e[0m You have deposited into the "
+              "Success: You have deposited into the "
               "account!\n");
         else
           printf(
-              "\e[38;5;196mFailure:\e[0m Something went wrong! Try again.\n");
+              "Failure: Something went wrong! Try again.\n");
         environment = FREE;
       }
       scanned_token++;
@@ -228,11 +228,11 @@ bool recognize_and_perform(BANK my_bank, TOKEN_LIST list) {
       if (list->tokens[scanned_token].is_numeric == true) {
         if (withdraw(my_bank, atoll(list->tokens[scanned_token].get)) == true)
           printf(
-              "\e[38;5;40mSuccess:\e[0m You have withdrawn from the "
+              "Success: You have withdrawn from the "
               "account!\n");
         else
           printf(
-              "\e[38;5;196mFailure:\e[0m Something went wrong! Try again.\n");
+              "Failure: Something went wrong! Try again.\n");
         environment = FREE;
       }
 
@@ -268,7 +268,7 @@ bool recognize_and_perform(BANK my_bank, TOKEN_LIST list) {
       // If numeric
       if (list->tokens[scanned_token].is_numeric == true) {
         if (maximize(cash, atoi(list->tokens[scanned_token].get)) == true)
-          printf("\e[38;5;40mSuccess:\e[0m maximized Rs. %d/- notes!\n",
+          printf("Success: maximized Rs. %d/- notes!\n",
                  atoi(list->tokens[scanned_token].get));
       }
 
@@ -277,12 +277,12 @@ bool recognize_and_perform(BANK my_bank, TOKEN_LIST list) {
         if (strcmp(list->tokens[scanned_token].get, "done") == 0) {
           if (withdraw_cash(my_bank, cash) == true) {
             printf(
-                "\e[38;5;40mSuccess:\e[0m You have withdrawn from the "
+                "Success: You have withdrawn from the "
                 "account!\n");
             display_cash(cash);
           } else
             printf(
-                "\e[38;5;196mFailure:\e[0m Something went wrong! Try "
+                "Failure: Something went wrong! Try "
                 "again.\n");
 
           environment = FREE;
@@ -326,15 +326,15 @@ bool recognize_and_perform(BANK my_bank, TOKEN_LIST list) {
 TOKEN_LIST get_clean_input(BANK my_bank) {
   if (my_bank->user_login_id == -1)
     return get_tokens(
-        get_string("\e[38;5;32mGuest@%s $: \e[0m", my_bank->name));
+        get_string("Guest@%s $: ", my_bank->name));
   else
-    return get_tokens(get_string("\e[38;5;32m%s@%s $: \e[0m",
+    return get_tokens(get_string("%s@%s $: ",
                                  my_bank->account[my_bank->user_login_id].name,
                                  my_bank->name));
 }
 
 void GUI_icon() {
-  printf("\n\n\n\e[38;5;32m");
+  printf("\n\n\n");
   printf("                                                  \n");
   printf("                       **                         \n");
   printf("                    ** ** **                      \n");
@@ -355,14 +355,14 @@ void GUI_icon() {
   printf("       **********************************         \n");
   printf("     **************************************       \n");
   printf("                                                  \n");
-  printf("\n\e[0m");
+  printf("\n");
 }
 
 void GUI_head() {
-  printf("\n\e[38;5;32m");
+  printf("\n");
   printf(" //////////////////////////////////////////////// \n");
   printf(
-      " //\e[0m         Welcome to the Bank Console        \e[38;5;32m// \n");
+      " //         Welcome to the Bank Console        // \n");
   printf(" //////////////////////////////////////////////// \n");
-  printf("\n\e[0m");
+  printf("\n");
 }
