@@ -23,7 +23,7 @@ Transaction Console - is a console program build using procedural C programming 
 
 ## 1. Getting Started
 
-You can find the [source code and the documentation](https://github.com/s-m-quadri/DIEMS-Lab-Work/tree/main/Algorithms_(Design_and_Analysis)/Transaction_Console), the [download link](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/s-m-quadri/DIEMS-Lab-Work/tree/main/Algorithms_(Design_and_Analysis)/Transaction_Console), the [presentation](https://docs.google.com/presentation/d/1dHO6gfuDkVlOmNpsqJTg1qTbhL0yxjn64XYxIdvr-NA/edit?usp=sharing) and the root [repository](https://github.com/s-m-quadri/DIEMS-Lab-Work) from which you can view as well as download the libraries and as project whole. You can clone the root repository as,
+You can find the [source code](https://github.com/s-m-quadri/DIEMS-Lab-Work/tree/main/Algorithms_(Design_and_Analysis)/Transaction_Console) with documentation and details, the [download link](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/s-m-quadri/DIEMS-Lab-Work/tree/main/Algorithms_(Design_and_Analysis)/Transaction_Console) and the [presentation](https://docs.google.com/presentation/d/1dHO6gfuDkVlOmNpsqJTg1qTbhL0yxjn64XYxIdvr-NA/edit?usp=sharing) from which you can read and learn as well as download the libraries and as project whole. You can clone the [root repository](https://github.com/s-m-quadri/DIEMS-Lab-Work) as,
 
     git clone https://github.com/s-m-quadri/DIEMS-Lab-Work.git
 
@@ -31,27 +31,36 @@ You can find the [source code and the documentation](https://github.com/s-m-quad
 
 After cloning the project or source file navigate to,
 [Algorithms_(Design_and_Analysis)](https://github.com/s-m-quadri/DIEMS-Lab-Work/tree/main/Algorithms_(Design_and_Analysis)/Transaction_Console) > [Transaction_Console](https://github.com/s-m-quadri/DIEMS-Lab-Work/tree/main/Algorithms_(Design_and_Analysis)/Transaction_Console) > ...
-making your current working directory. Now, Compile the code using
+making your current working directory.
 
-    gcc cs50.c bank.c token.c main.c
+All you need to do is run the appropriate executable file.
 
-Now, simply run
+    Just Double click for windows users
 
-    ./a.out 
+For linux users, simply run
 
+    ./Linux64_Transaction_Console.out 
+
+Also you can compile the code (if needed) in the **src** folder.
+
+    gcc cs50.c bank.c token.c main.c -o Linux64_Transaction_Console.out
 can do (optionally) memory check using
 
-    valgrind ./a.out 
+    valgrind ./Linux64_Transaction_Console.out 
 
 or (optionally) time check using
 
-    time ./a.out 
+    time ./Linux64_Transaction_Console.out 
 
 ## 3. Documentation
+
+![TC-Interface.png](img/TC-Interface.png)
 
     Command $: help
 
 ... to get the help
+
+![TC-Intro.png](img/TC-Intro.png)
 
     Command $: login
 
@@ -67,10 +76,14 @@ or (optionally) time check using
 
 ... will withdraw 300 from the logged in account
 
+![TC-1st-Tour.png](img/TC-1st-Tour.png)
+
     Command $: withdraw cash (amount) (note-denom...) done
     e.g.    $: withdraw cash 300 100 50 done
 
 ... will withdraw 300 from the logged-in account in form of cash and will maximize the notes of denomination 100 then will maximize the notes of denomination 50. Afterwards, will calculate the optimal (here, minimum) number of notes to complete the withdrawn amount and give it to user.
+
+![TC-2nd-Tour.png](img/TC-2nd-Tour.png)
 
     Command $: show
 
@@ -79,6 +92,8 @@ or (optionally) time check using
     Command $: logout
 
 ... to proceed for logout
+
+![TC-Error-Handling.png](img/TC-Error-Handling.png)
 
     Command $: exit
 
