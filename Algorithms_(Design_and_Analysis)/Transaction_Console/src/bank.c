@@ -1,16 +1,12 @@
-/**
- * @file bank.c
- * @brief implementations of bank related functionalities
- * @author Syed Minnatullah - Quadri
- * @copyright Copyright (c) 2022, Syed Minnatullah - Quadri
- */
-
 /******************************************************************************
 
 ///////////////////////////////////////////////////////////////////////////////
-//     -> Library "Bank"                                                     //
-//     -> Implementations Section                                            //
-//     -> Last updated on July 2022                                          //
+ * @file bank.h
+ * @brief Implementation of bank related functionalities
+ * @author Syed Minnatullah - Quadri
+ * @copyright Copyright (c) 2022, Syed Minnatullah - Quadri Under BSD 3-Clause
+ * License
+ * @date Last updated on July 2022
 ///////////////////////////////////////////////////////////////////////////////
 
 BSD 3-Clause License
