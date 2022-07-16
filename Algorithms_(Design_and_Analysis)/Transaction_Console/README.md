@@ -23,7 +23,7 @@ Transaction Console - is a console program build using procedural C programming 
 
 ## 1. Getting Started
 
-You can find the [source code](https://github.com/s-m-quadri/DIEMS-Lab-Work/tree/main/Algorithms_(Design_and_Analysis)/Transaction_Console) with documentation and details, the [download link](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/s-m-quadri/DIEMS-Lab-Work/tree/main/Algorithms_(Design_and_Analysis)/Transaction_Console) and the [presentation](https://docs.google.com/presentation/d/1dHO6gfuDkVlOmNpsqJTg1qTbhL0yxjn64XYxIdvr-NA/edit?usp=sharing) from which you can read and learn as well as download the libraries and as project whole. You can clone the [root repository](https://github.com/s-m-quadri/DIEMS-Lab-Work) as,
+You can find the [source code](https://github.com/s-m-quadri/DIEMS-Lab-Work/tree/main/Algorithms_(Design_and_Analysis)/Transaction_Console) with documentation and details, the [download link](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/s-m-quadri/DIEMS-Lab-Work/tree/main/Algorithms_(Design_and_Analysis)/Transaction_Console), the [presentation](https://docs.google.com/presentation/d/1dHO6gfuDkVlOmNpsqJTg1qTbhL0yxjn64XYxIdvr-NA/edit?usp=sharing) and [problem statement](https://docs.google.com/document/d/1rmJcuww_F4fHgcUUa9SzjrW66HLRldLCSCLAjv7JJ9k/edit?usp=sharing) from which you can read and learn as well as download the libraries and as project whole. You can clone the [root repository](https://github.com/s-m-quadri/DIEMS-Lab-Work) as,
 
     git clone https://github.com/s-m-quadri/DIEMS-Lab-Work.git
 
