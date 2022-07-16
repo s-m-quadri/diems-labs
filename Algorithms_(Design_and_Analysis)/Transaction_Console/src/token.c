@@ -1,9 +1,12 @@
 /******************************************************************************
 
 ///////////////////////////////////////////////////////////////////////////////
-//     -> Library "Token"                                                    //
-//     -> Implementations Section                                            //
-//     -> Last updated on July 2022                                          //
+ * @file token.h
+ * @brief Implementation of token related functionalities
+ * @author Syed Minnatullah - Quadri
+ * @copyright Copyright (c) 2022, Syed Minnatullah - Quadri Under BSD 3-Clause
+ * License
+ * @date Last updated on July 2022
 ///////////////////////////////////////////////////////////////////////////////
 
 BSD 3-Clause License
@@ -45,6 +48,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * @brief This function will take string (command) as an input, split it into
+ * the tokens which includes the information of words in it and the type of
+ * character in each words (e.g. numeric, alphabetic) and handover the result.
+ * If some error happens returns the NULL.
+ * @param input The string which is to be splitted into token list
+ * @return TOKEN_LIST (reference) or NULL
+ */
 TOKEN_LIST get_tokens(string input) {
   // Make space for list and setup
   TOKEN_LIST list = (TOKEN_LIST)malloc(sizeof(TOKEN_LIST_ELEMENT));
@@ -113,6 +124,12 @@ TOKEN_LIST get_tokens(string input) {
   return list;
 }
 
+/**
+ * @brief This function will take token list's reference as an input and
+ * displays the tokens with related information. Just for developer and for
+ * testing purpose only.
+ * @param list The token list's reference structure which has to be displayed
+ */
 void display_tokens(TOKEN_LIST list) {
   for (int i = 0; i < list->quantity; i++) {
     printf("Token #%02d: %s, isnumber:%d isalpha:%d\n", i + 1,
@@ -121,6 +138,12 @@ void display_tokens(TOKEN_LIST list) {
   }
 }
 
+/**
+ * @brief This function will take the token list's reference as an input and
+ * frees the memory allocated by the get_tokens() function. Returns 'true' if
+ * done else return 'false'.
+ * @return 'true' or 'false'
+ */
 bool free_tokens(TOKEN_LIST list) {
   for (int i = 0; i < list->quantity; i++) {
     free(list->tokens[i].get);

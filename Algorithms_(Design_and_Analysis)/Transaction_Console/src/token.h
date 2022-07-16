@@ -1,9 +1,12 @@
 /******************************************************************************
 
 ///////////////////////////////////////////////////////////////////////////////
-//     -> Library "Token"                                                    //
-//     -> Interface Section                                                  //
-//     -> Last updated on July 2022                                          //
+ * @file token.h
+ * @brief Interface of token related functionalities
+ * @author Syed Minnatullah - Quadri
+ * @copyright Copyright (c) 2022, Syed Minnatullah - Quadri Under BSD 3-Clause
+ * License
+ * @date Last updated on July 2022
 ///////////////////////////////////////////////////////////////////////////////
 
 BSD 3-Clause License
@@ -42,21 +45,52 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TOKEN_H
 #include "cs50.h"
 
+/**
+ * @brief Single token data structure
+ */
 typedef struct {
   bool is_alpha;
   bool is_numeric;
   string get;
 } TOKEN;
 
+/**
+ * @brief Token list data structure
+ */
 typedef struct {
   int quantity;
   TOKEN* tokens;
 } TOKEN_LIST_ELEMENT;
 
+/**
+ * @brief Token list's data structure reference
+ */
 #define TOKEN_LIST TOKEN_LIST_ELEMENT*
 
-// TODO: add functions prototypes
+/**
+ * @brief This function will take string (command) as an input, split it into
+ * the tokens which includes the information of words in it and the type of
+ * character in each words (e.g. numeric, alphabetic) and handover the result.
+ * If some error happens returns the NULL.
+ * @param input The string which is to be splitted into token list
+ * @return TOKEN_LIST (reference) or NULL
+ */
 TOKEN_LIST get_tokens(string input);
+
+/**
+ * @brief This function will take token list's reference as an input and
+ * displays the tokens with related information. Just for developer and for
+ * testing purpose only.
+ * @param list The token list's reference structure which has to be displayed
+ */
 void display_tokens(TOKEN_LIST list);
+
+/**
+ * @brief This function will take the token list's reference as an input and
+ * frees the memory allocated by the get_tokens() function. Returns 'true' if
+ * done else return 'false'.
+ * @return 'true' or 'false'
+ */
 bool free_tokens(TOKEN_LIST);
+
 #endif

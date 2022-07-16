@@ -1,9 +1,13 @@
 /******************************************************************************
 
 ///////////////////////////////////////////////////////////////////////////////
-//     -> Project "Transaction Console"                                      //
-//     -> Main Section                                                       //
-//     -> Last updated on July 2022                                          //
+ * @file main.c
+ * @brief Project "Transaction Console"
+ * @author Syed Minnatullah - Quadri
+ * @copyright Copyright (c) 2022, Syed Minnatullah - Quadri Under BSD 3-Clause
+ * License
+ * @date Last updated on July 2022
+///////////////////////////////////////////////////////////////////////////////
 //     -> Compilation   $: gcc cs50.c bank.c token.c main.c                  //
 //     -> Memory Check  $: valgrind ./a.out                                  //
 //     -> Time Check    $: time ./a.out                                      //
@@ -42,16 +46,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ******************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-///                                                                         ///
-///                              Main Section                               ///
-///                                                                         ///
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,10 +55,49 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "cs50.h"
 #include "token.h"
 
+/**
+ * @brief This function will take bank's structure reference and the list of
+ * commands as tokens and perform the various computational task by creating the
+ * environment. Return true when done with execution and don't want to exit.
+ * Returns false when done with the execution and wanted to exit.
+ * @param my_bank  The bank's data structure reference
+ * @param list The token's data structure reference
+ * @return 'true' or 'false'
+ */
 bool recognize_and_perform(BANK my_bank, TOKEN_LIST list);
+
+/**
+ * @brief This function will print the bank's icon using simple character
+ * design and escape code's coloring.
+ */
 void GUI_icon();
+
+/**
+ * @brief This function will print the bank's header using simple character
+ * design and escape code's coloring.
+ */
 void GUI_head();
+
+/**
+ * @brief This function will take the bank's reference structure as an input,
+ * prompt the user to type commands, pass then covert it into the tokens with
+ * some lower level recognition and handover the Token's list reference (since
+ * it is just reference, thus needed to be freed after usage). For this purpose
+ * it uses mutiple/nested calling to other library functions.
+ * @param my_bank The bank's reference structure
+ * @return TOKEN_LIST (reference) or NULL
+ */
 TOKEN_LIST get_clean_input(BANK my_bank);
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///                                                                         ///
+///                              Main Section                               ///
+///                                                                         ///
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 int main() {
   /////////////////////////////////////////////////////////////////////////////
@@ -104,12 +137,21 @@ int main() {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///                                                                         ///
-///                       Implementation Section                            ///
+///                       Completed Main Section                            ///
 ///                                                                         ///
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+/**
+ * @brief This function will take bank's structure reference and the list of
+ * commands as tokens and perform the various computational task by creating the
+ * environment. Return true when done with execution and don't want to exit.
+ * Returns false when done with the execution and wanted to exit.
+ * @param my_bank  The bank's data structure reference
+ * @param list The token's data structure reference
+ * @return 'true' or 'false'
+ */
 bool recognize_and_perform(BANK my_bank, TOKEN_LIST list) {
   enum {
     FREE,
@@ -151,7 +193,7 @@ bool recognize_and_perform(BANK my_bank, TOKEN_LIST list) {
     }
 
     /////////////////////////////////////////////////////////////////////////
-    // Command $: exit
+    // Command $: help
     /////////////////////////////////////////////////////////////////////////
     if (strcmp(list->tokens[scanned_token].get, "help") == 0 &&
         environment == FREE) {
@@ -323,6 +365,15 @@ bool recognize_and_perform(BANK my_bank, TOKEN_LIST list) {
   return return_status;
 }
 
+/**
+ * @brief This function will take the bank's reference structure as an input,
+ * prompt the user to type commands, pass then covert it into the tokens with
+ * some lower level recognition and handover the Token's list reference (since
+ * it is just reference, thus needed to be freed after usage). For this purpose
+ * it uses mutiple/nested calling to other library functions.
+ * @param my_bank The bank's reference structure
+ * @return TOKEN_LIST (reference) or NULL
+ */
 TOKEN_LIST get_clean_input(BANK my_bank) {
   if (my_bank->user_login_id == -1)
     return get_tokens(
@@ -333,6 +384,10 @@ TOKEN_LIST get_clean_input(BANK my_bank) {
                                  my_bank->name));
 }
 
+/**
+ * @brief This function will print the bank's icon using simple character
+ * design and escape code's coloring.
+ */
 void GUI_icon() {
   printf("\n\n\n\e[38;5;32m");
   printf("                                                  \n");
@@ -358,6 +413,10 @@ void GUI_icon() {
   printf("\n\e[0m");
 }
 
+/**
+ * @brief This function will print the bank's header using simple character
+ * design and escape code's coloring.
+ */
 void GUI_head() {
   printf("\n\e[38;5;32m");
   printf(" //////////////////////////////////////////////// \n");

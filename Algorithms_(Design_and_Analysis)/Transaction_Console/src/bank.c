@@ -1,3 +1,10 @@
+/**
+ * @file bank.c
+ * @brief implementations of bank related functionalities
+ * @author Syed Minnatullah - Quadri
+ * @copyright Copyright (c) 2022, Syed Minnatullah - Quadri
+ */
+
 /******************************************************************************
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,133 +54,256 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "cs50.h"
 
+/**
+ * @brief This function will create a bank (structure) of given name and return
+ * it as a reference (not copy, thus need to be freed after usage). If some
+ * error happens during creation, it will return NULL reference.
+ * @param name The name of the bank
+ * @return BANK (reference, not copy) or 'NULL'
+ */
 BANK create_bank(string name) {
+  // Create: Make space for bank
   BANK new_space = (BANK)calloc(1, sizeof(bank_element));
   if (new_space == NULL) {
     printf("\e[38;5;196mError:\e[0m Out of memory.\n");
     return NULL;
   }
+  // Configure: Initialize variables of bank
   new_space->name = name;
   new_space->accounts_quantity = 0;
   new_space->user_login_id = -1;
   new_space->account = NULL;
+
+  // Status: Return the bank's structure reference
   return new_space;
 }
 
+/**
+ * @brief This function will take the bank as an input and returns the status as
+ * 'true' if successfully deleted the bank. Otherwise returns status as 'false'
+ * if failed to delete the bank.
+ * @param bank The bank's data struture reference
+ * @return 'true' or 'false'
+ */
 bool delete_bank(BANK bank) {
+  // Check: Whether the bank exist!
   if (bank == NULL) return false;
+
+  // Clean: Free the space allocated by bank's structure reference
   free(bank->account);
   free(bank);
+
+  // Status: Reached success
   return true;
 }
 
+/**
+ * @brief This function will log the user into the bank by updating the 'bank'
+ * structure reference. Also some check happens here, e.g. wether the given
+ * username exist or not, if exist then authorize, if not exist the create the
+ * space for new user. Afterwards updating the curent_login_id variable in the
+ * 'bank' structure reference everybody get knows about the login status of
+ * current user. Returns 'true' if successfully created space (if any) and
+ * logged in, otherwise returns 'false'.
+ * @param bank The bank's data struture reference
+ * @return 'true' or 'false'
+ */
 bool login(BANK bank) {
+  // Check: Wether the bank exist!
   if (bank == NULL) return false;
-  // Clean up login status
+
+  // Clean: Clean up the login status
   logout(bank);
 
-  // Authorize from existing data
+  // Get: The username
   string user = get_string(
       "\e[38;5;214m>\e[0m Enter User Name (case sensitive) : \e[38;5;214m");
+
+  // Find: The username from existing accounts in bank
+  // IF FOUND:
   for (int i = 0; i < bank->accounts_quantity; i++) {
     if (strcmp(user, bank->account[i].name) == 0) {
+      // Get: PIN for authorization
       long long unsigned int PIN =
           get_long_long("\e[38;5;214m>\e[0m Enter PIN: ");
+
+      // Authorize: Get the user access to bank account
       if (PIN == bank->account[i].pin) {
         bank->user_login_id = bank->account[i].id;
         return true;
-      } else {
+      }
+
+      // Un-Authorize: PIN don't match, failed to login
+      else {
         printf("\e[38;5;196mError:\e[0m Wrong PIN.\n");
         return false;
       }
     }
   }
 
-  // Create new space
+  // IF NOT FOUND
+  // Warn: About creating new space
   printf("\e[38;5;214mWarning:\e[0m Account does't exist!\n");
   printf(
       "\e[38;5;214mInfo:\e[0m Creating new account with User Name "
       "\e[38;5;214m%s\e[0m.\n",
       user);
+
+  // Get: The passwords for new user
   long long unsigned int PIN = get_long_long("\e[38;5;214m>\e[0m Enter PIN: ");
   long long unsigned int C_PIN =
       get_long_long("\e[38;5;214m>\e[0m Re-Enter PIN: ");
-  if (PIN == C_PIN) {
-    unsigned int cur_user = bank->accounts_quantity;
-    account_element* new_space = (account_element*)realloc(
-        bank->account, sizeof(account_element) * (cur_user + 1));
-    if (new_space == NULL) {
-      printf("\e[38;5;196mError:\e[0m Out of memory.\n");
-      return false;
-    }
-    bank->account = new_space;
-    bank->account[cur_user].id = cur_user;
-    bank->account[cur_user].pin = PIN;
-    bank->account[cur_user].name = user;
-    bank->account[cur_user].amount = 3210;
-    bank->accounts_quantity++;
-    bank->user_login_id = cur_user;
-    return true;
-  } else {
+
+  // Check: Do passwords confirmed
+  if (PIN != C_PIN) {
     printf("\e[38;5;196mError:\e[0m Passwords don't match.\n");
     return false;
   }
+
+  // Create: Make space for new user
+  unsigned int cur_user = bank->accounts_quantity;
+  account_element* new_space = (account_element*)realloc(
+      bank->account, sizeof(account_element) * (cur_user + 1));
+  if (new_space == NULL) {
+    printf("\e[38;5;196mError:\e[0m Out of memory.\n");
+    return false;
+  }
+  // Configure: Initialize variables of new user's bank account
+  bank->account = new_space;
+  bank->account[cur_user].id = cur_user;
+  bank->account[cur_user].pin = PIN;
+  bank->account[cur_user].name = user;
+  bank->account[cur_user].amount = 3210;
+  bank->accounts_quantity++;
+  bank->user_login_id = cur_user;
+
+  // Status: Reached success
+  return true;
 }
 
+/**
+ * @brief This function will take 'bank' structure reference as an input and log
+ * the user out simply by updating the current user login id variable in the
+ * structure reference of bank. Returns 'true' if successfully log the user out,
+ * otherwise returns the 'false'.
+ * @param bank The bank's data struture reference
+ * @return 'true' or 'false'
+ */
 bool logout(BANK bank) {
   if (bank == NULL) return false;
   bank->user_login_id = -1;
   return true;
 }
 
+/**
+ * @brief This function will deposit the given 'amount' into the logged in
+ * user's bank account. Returns 'true' if successfully deposited the given
+ * 'amount', otherwise returns 'false'.
+ * @param bank The bank's data struture reference
+ * @param amount The amount which has to be deposited into the logged in user's
+ * bank account
+ * @return 'true' or 'false'
+ */
 bool deposit(BANK bank, long long int amount) {
+  // Check: Wether the 'bank' exist!
   if (bank == NULL) return false;
+
+  // Check: Wether the user is logged in
   if (bank->user_login_id == -1) {
     printf("\e[38;5;196mError:\e[0m Login required.\n");
     return false;
   }
+
+  // Check: Wether the amount is positive
   if (amount <= 0) {
     printf("\e[38;5;196mError:\e[0m Amount must be in positive numeric.\n");
     return false;
   }
+
+  // Deposit: Into the logged in user's bank account
   unsigned int cur_user = bank->user_login_id;
   bank->account[cur_user].amount += amount;
+
+  // Status: Reached success
   return true;
 }
 
+/**
+ * @brief This function will withdraw the given 'amount' from the logged in
+ * user's bank account. Returns 'true' if successfully withdrawn the given
+ * 'amount' otherwise returns 'false'.
+ * @param bank The bank's data struture reference
+ * @param amount The amount which has to be withdrawn from the logged in user's
+ * bank account
+ * @return 'true' or 'false'
+ */
 bool withdraw(BANK bank, long long int amount) {
+  // Check: Wether the 'bank' exist!
   if (bank == NULL) return false;
+
+  // Check: Wether the user logged in
   if (bank->user_login_id == -1) {
     printf("\e[38;5;196mError:\e[0m Login required.\n");
     return false;
   }
+
+  // Check: Wether the amount is positive
   if (amount <= 0) {
     printf("\e[38;5;196mError:\e[0m Amount must be in positive numeric.\n");
     return false;
   }
+
+  // Check: Wether the user has enough amount to withdraw
   unsigned int cur_user = bank->user_login_id;
   if (amount > bank->account[cur_user].amount) {
     printf("\e[38;5;196mError:\e[0m You don't have enough amount.\n");
     return false;
   }
+
+  // Withdraw: From the logged in user's bank account
   bank->account[cur_user].amount -= amount;
+
+  // Status: Reached success
   return true;
 }
 
+/**
+ * @brief This function will create a 'cash' of the given 'amount' and the
+ * logged in user's bank account. Return the 'cash' structure reference (not
+ * copy, thus need to be freed after usage) if successfully, otherwise returns
+ * 'NULL'.
+ * @param bank The bank's data struture reference
+ * @param amount The cash amount for withdrawal from the logged in user's bank
+ * account
+ * @return CASH (reference, not copy) or 'NULL'
+ */
 CASH create_cash_withdraw(BANK bank, long long int amount) {
+  // Check: Wether the 'bank' exist
   if (bank == NULL) return NULL;
+
+  // Check: Wether the user is logged in
   if (bank->user_login_id == -1) {
     printf("\e[38;5;196mError:\e[0m Login required.\n");
     return NULL;
   }
+
+  // Check: Wether the amount is positive
   if (amount <= 0) {
     printf("\e[38;5;196mError:\e[0m Amount must be in positive numeric.\n");
     return NULL;
   }
-  unsigned int cur_user = bank->user_login_id;
-  if (amount > bank->account[cur_user].amount) return NULL;
 
+  // Check: Wether the user has enough amount to withdraw
+  unsigned int cur_user = bank->user_login_id;
+  if (amount > bank->account[cur_user].amount) {
+    printf("\e[38;5;196mError:\e[0m You don't have enough amount.\n");
+    return NULL;
+  }
+
+  // Create: Make a new space for cash
   CASH cash = (CASH)calloc(1, sizeof(cash_element));
+
+  // Configure: Initialize the cash structure reference's new variables
   cash->amount = amount;
   cash->remain = cash->amount;
   cash->_Rs1_coins = 0;
@@ -184,14 +314,32 @@ CASH create_cash_withdraw(BANK bank, long long int amount) {
   cash->_Rs100_notes = 0;
   cash->_Rs500_notes = 0;
   cash->_Rs2000_notes = 0;
+
+  // Status: Handover the cash
   return cash;
 }
 
+/**
+ * @brief This function will update the cash structure reference (if any) by
+ * minimizing the number of currency notes (aka maximizing the higher
+ * denominations), and withdraw just like a simple withdraw happens from logged
+ * in user's bank account. Returns 'true' if successfully withdrawn, otherwise
+ * returns 'false'.
+ * @param bank The bank's data struture reference
+ * @param cash The 'cash' which has to be withdrawn from logged in user
+ * @return 'true' or 'false'
+ */
 bool withdraw_cash(BANK bank, CASH cash) {
+  // Check: Whether 'bank' exist!
   if (bank == NULL) return false;
+
+  // Check: Whether 'cash' exist!
   if (cash == NULL) return false;
 
-  // Optimal Solution
+  // Compute Optimal Solution:
+  // Both the following statement are similar in logic,
+  // a. "Minimum number of currency denominations"
+  // b. "Maximum number of notes of higher currency denominations"
   maximize(cash, 2000);
   maximize(cash, 500);
   maximize(cash, 100);
@@ -200,59 +348,101 @@ bool withdraw_cash(BANK bank, CASH cash) {
   maximize(cash, 5);
   maximize(cash, 2);
   maximize(cash, 1);
+
+  // Check: Do we have converted 'all the amount' to cash.
   if (cash->remain != 0) return false;
+
+  // Withdraw the given 'amount' from logged in user's bank account.
   unsigned int cur_user = bank->user_login_id;
   bank->account[cur_user].amount -= cash->amount;
+
+  // Status: Success
   return true;
 }
 
+/**
+ * @brief This function will maximize the given 'denomination' from the given
+ * 'cash' structure reference. Returns 'true' if successfully maximized,
+ * otherwise returns 'false'.
+ * @param cash The 'cash' from which the given 'denomination' is to maximized
+ * @param denomination The 'denomination' which has to be maximized
+ * @return 'true' or 'false'
+ */
 bool maximize(CASH cash, int denomination) {
+  // Check: Whether 'cash' exist!
   if (cash == NULL) return false;
+
+  // Maximize the given denomination
   switch (denomination) {
+    // Denomination: Rs. 1/-
     case 1:
       cash->_Rs1_coins += cash->remain / denomination;
       cash->remain = cash->remain % denomination;
       return true;
+
+    // Denomination: Rs. 2/-
     case 2:
       cash->_Rs2_coins += cash->remain / denomination;
       cash->remain = cash->remain % denomination;
       return true;
+
+    // Denomination: Rs. 5/-
     case 5:
       cash->_Rs5_coins += cash->remain / denomination;
       cash->remain = cash->remain % denomination;
       return true;
+
+    // Denomination: Rs. 10/-
     case 10:
       cash->_Rs10_notes += cash->remain / denomination;
       cash->remain = cash->remain % denomination;
       return true;
+
+    // Denomination: Rs. 50/-
     case 50:
       cash->_Rs50_notes += cash->remain / denomination;
       cash->remain = cash->remain % denomination;
       return true;
+
+    // Denomination: Rs. 100/-
     case 100:
       cash->_Rs100_notes += cash->remain / denomination;
       cash->remain = cash->remain % denomination;
       return true;
+
+    // Denomination: Rs. 500/-
     case 500:
       cash->_Rs500_notes += cash->remain / denomination;
       cash->remain = cash->remain % denomination;
       return true;
+
+    // Denomination: Rs. 2000/-
     case 2000:
       cash->_Rs2000_notes += cash->remain / denomination;
       cash->remain = cash->remain % denomination;
       return true;
-
-    default:
-      printf(
-          "\e[38;5;196mError:\e[0m Denomination \e[38;5;214mRs. %d/-\e[0m "
-          "don't exist.\n",
-          denomination);
-      return false;
   }
+
+  // Check: Invalid denomination
+  printf(
+      "\e[38;5;196mError:\e[0m Denomination \e[38;5;214mRs. %d/-\e[0m "
+      "don't exist.\n",
+      denomination);
+  return false;
 }
 
+/**
+ * @brief This function will display significant details of 'cash' structure
+ * reference with text decoration using escape characters. The function returns
+ * nothing.
+ * @param cash The 'cash' which has to be displayed
+ * @return void (nothing)
+ */
 void display_cash(CASH cash) {
+  // Check: Wether the bank exist
   if (cash == NULL) return;
+
+  // Display: cash information
   printf(
       "\e[38;5;214m>\e[0m You have got or withdrawn the cash of \n"
       "  total amount Rs. %llu/- having,\n"
@@ -270,8 +460,19 @@ void display_cash(CASH cash) {
       cash->_Rs500_notes, cash->_Rs2000_notes);
 }
 
+/**
+ * @brief This function will display some of the details of the logged in user's
+ * bank account with text decoration using escape characters. The function
+ * returns nothing.
+ * @param bank The 'bank' from which some details of logged in user's bank
+ * account has to be displayed
+ * @return void (nothing)
+ */
 void display(BANK bank) {
+  // Check: Wether the bank exist
   if (bank == NULL) return;
+
+  // Display: logged in user's account details
   printf(
       "\e[38;5;214m>\e[0m The Bank Name is \e[38;5;214m%s\e[0m, which is\n"
       "  currently under \e[38;5;214m%s's\e[0m control.\n",
@@ -288,7 +489,13 @@ void display(BANK bank) {
         bank->account[bank->user_login_id].amount);
 }
 
+/**
+ * @brief This function is meant to display help manual for the console app.
+ * Neither require any input nor returns any thing, just have side effect as
+ * text which is decorated using escape codes.
+ */
 void help() {
+  // Display: help manual
   printf(
       "\n"
       "\e[38;5;214m>\e[0m Command \e[38;5;214m$: login\e[0m\n"
