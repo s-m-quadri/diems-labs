@@ -4,22 +4,22 @@ using namespace std;
 // To heapify a subtree rooted with node i which
 // is index of arr[] and n is the size of heap
 void heapify(int arr[], int n, int i) {
-  int largest = i;
-  int l = 2 * i + 1;
-  int r = 2 * i + 2;
+  int parent = i;
+  int left_child = 2 * i + 1;
+  int right_child = 2 * i + 2;
 
   // If left child is larger than root
-  if (l < n && arr[l] > arr[largest]) largest = l;
+  if (left_child < n && arr[left_child] > arr[parent]) parent = left_child;
 
   // If right child largest than root
-  if (r < n && arr[r] > arr[largest]) largest = r;
+  if (right_child < n && arr[right_child] > arr[parent]) parent = right_child;
 
   // If root is not largest
-  if (largest != i) {
-    swap(arr[i], arr[largest]);
+  if (parent != i) {
+    swap(arr[i], arr[parent]);
 
     // heapifying the sub-tree repeatedly
-    heapify(arr, n, largest);
+    heapify(arr, n, parent);
   }
 }
 // Main function to do the heap sort
